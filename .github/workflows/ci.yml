@@ -1,0 +1,24 @@
+# The name of the workflow
+name: test
+
+# What conditions trigger the workflow
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+# The jobs that will be run, usually in parallel
+jobs:
+
+  # A job to run unit tests for the app
+  unit_tests:
+    # The OS on which the job will run
+    runs-on: ubuntu-latest
+
+    # The steps for the job, executed in sequence
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Unit tests
+        run: ./gradlew test
