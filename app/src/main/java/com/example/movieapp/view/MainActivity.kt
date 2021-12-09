@@ -1,34 +1,33 @@
 package com.example.movieapp.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.activity.viewModels
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.navigation.NavHostController
+import com.example.movieapp.navigation.SetupNavigation
+import com.example.movieapp.view.ui.theme.MovieComposeTheme
+import com.example.movieapp.viewmodel.SharedViewModel
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : AppCompatActivity() {
+@ExperimentalAnimationApi
+@ExperimentalMaterial3Api
+@AndroidEntryPoint
+class MainActivity : ComponentActivity() {
+
+    private lateinit var navController: NavHostController
+    private val sharedViewModel: SharedViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MessageCard(Message("Jimmy McBride", "How To Fast"))
+            MovieComposeTheme {
+                navController = rememberAnimatedNavController()
+                SetupNavigation(navController, sharedViewModel)
+            }
         }
     }
-}
-
-data class Message(val author: String, val body: String)
-
-@Composable
-fun MessageCard(msg: Message) {
-    Column {
-        Text(text = msg.author)
-        Text(text = msg.body)
-    }
-}
-
-@Preview
-@Composable
-fun ComposablePreview() {
-    MessageCard(Message("Jimmy McBride", "How To Fast"))
 }
