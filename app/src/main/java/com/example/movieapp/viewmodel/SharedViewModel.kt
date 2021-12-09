@@ -1,5 +1,6 @@
 package com.example.movieapp.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -35,8 +36,34 @@ class SharedViewModel @Inject constructor(
     private val _searchedMovies = MutableStateFlow<RequestState<List<Movie>>>(RequestState.Idle)
     val searchedMovies: StateFlow<RequestState<List<Movie>>> = _searchedMovies
 
+    fun movieById(movieId: Int) = movieRepo.getMovieById(movieId)
+
+    private val _selectedMovie: MutableStateFlow<Movie?> = MutableStateFlow(null)
+    val selectedMovie: StateFlow<Movie?> = _selectedMovie
+
+    fun getSelectedMovie(movieId: Int) {
+        viewModelScope.launch {
+            movieRepo.getMovieById(movieId).collect { movie ->
+                _selectedMovie.value = movie
+            }
+        }
+    }
+
     init {
         getAllMovies()
+//        viewModelScope.launch {
+//            val res = remoteMovies(1)
+//            if (res.isSuccessful) {
+//                val maxPages = res.body()!!.total_pages
+//                for (num in 1..maxPages) {
+//                    val movieList = remoteMovies(num).body()?.results
+//                    movieList?.map {
+//                        Log.d("SharedViewModel", it.toString())
+//                        movieRepo.addMovie(it)
+//                    }
+//                }
+//            }
+//        }
     }
 
     private fun getAllMovies() {
