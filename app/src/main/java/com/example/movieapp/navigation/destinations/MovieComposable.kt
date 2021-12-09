@@ -4,6 +4,9 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -31,14 +34,13 @@ fun NavGraphBuilder.movieComposable(
             )
         }
     ) { navBackStackEntry ->
-        val taskId = navBackStackEntry.arguments!!.getInt(MOVIE_ARGUMENT_KEY)
+        val movieId = navBackStackEntry.arguments!!.getInt(MOVIE_ARGUMENT_KEY)
 
-//        val selectedMovie by sharedViewModel.selectedMovie.collectAsState()
+        val selectedMovie by sharedViewModel.selectedMovie.collectAsState()
 
-//        LaunchedEffect(key1 = taskId) {
-//            sharedViewModel.getSelectedMovie(taskId)
-//        }
-
-        MovieScreen(navigateToListScreen, sharedViewModel)
+        LaunchedEffect(key1 = movieId) {
+            sharedViewModel.getSelectedMovie(movieId)
+        }
+        MovieScreen(navigateToListScreen, selectedMovie)
     }
 }

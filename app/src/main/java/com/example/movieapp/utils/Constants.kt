@@ -16,4 +16,6 @@ object Constants {
     const val SPLASH_DELAY = 2000L
 
     const val MOVIE_ARGUMENT_KEY = "movieId"
+
+    const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500"
 }

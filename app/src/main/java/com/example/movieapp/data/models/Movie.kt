@@ -15,12 +15,11 @@ data class Movie(
     val overview: String,
     val popularity: Float,
     val video: Boolean,
-    @ColumnInfo(name = "poster_path") val posterPath: String?,
-    @ColumnInfo(name = "release_date") val releaseDate: String?,
-//    @ColumnInfo(name = "genre_ids") val genreIds: List<Int>,
-    @ColumnInfo(name = "original_title") val originalTitle: String?,
-    @ColumnInfo(name = "original_language") val originalLanguage: String?,
-    @ColumnInfo(name = "backdrop_path") val backdropPath: String?,
-    @ColumnInfo(name = "vote_count") val voteCount: Int?,
-    @ColumnInfo(name = "vote_average") val voteAverage: Float?
+    val poster_path: String?,
+    val release_date: String?,
+    val original_title: String?,
+    val original_language: String?,
+    val backdrop_path: String?,
+    val vote_count: Int?,
+    val vote_average: Float?
 )

@@ -18,6 +18,6 @@ interface MovieDao {
     @Query("SELECT * FROM movie_table WHERE title LIKE :searchQuery OR overview LIKE :searchQuery")
     fun searchDatabase(searchQuery: String): Flow<List<Movie>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addMovie(movie: Movie)
 }
